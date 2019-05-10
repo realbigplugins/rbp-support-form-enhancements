@@ -20,6 +20,11 @@ class RBP_Support_Form_Enhancements_Gravity_Form {
 	function __construct() {
 		
 		add_filter( 'gform_pre_render_3', array( $this, 'populate_downloads_list' ), 10, 3 );
+
+		add_filter( 'gform_pre_render_3', array( $this, 'conditional_required_downloads_field' ) );
+		add_filter( 'gform_pre_validation_3', array( $this, 'conditional_required_downloads_field' ) );
+
+		add_action( 'gform_pre_enqueue_scripts_3', array( $this, 'enqueue_scripts' ), 10, 2 );
 			
 	}
 	
@@ -97,6 +102,45 @@ class RBP_Support_Form_Enhancements_Gravity_Form {
 		
 		return $form;
 		
+	}
+
+	public function conditional_required_downloads_field( $form ) {
+
+		$value = false;
+		foreach ( $form['fields'] as &$field ) {
+			
+			if ( $field['label'] == 'What best describes your inquiry?' ) {
+
+				$value = rgpost( 'input_' . $field['id'] );
+				break;
+
+			}
+
+		}
+
+		if ( $value == 'Other' ) {
+
+			foreach ( $form['fields'] as &$field ) {
+			
+				if ( $field['inputName'] == 'extension' ) {
+
+					$field->isRequired = false;
+					break;
+
+				}
+
+			}
+
+		}
+
+		return $form;
+
+	}
+
+	public function enqueue_scripts( $form, $ajax ) {
+
+		wp_enqueue_script( 'rbp-support-form-enhancements' );
+
 	}
 	
 }

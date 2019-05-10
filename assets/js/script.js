@@ -1,0 +1,2 @@
+"use strict";!function(e){e(document).ready(function(){e(document).on("change",".edd-gf-support-tickets-form-subject",function(t){var d=e(t.target).attr("id").match(/\d+$/),i="undefined"!=typeof d[0]?d[0]:-1;2==i?e(".edd-gf-support-tickets-form-which-extension .gfield_required").hide():e(".edd-gf-support-tickets-form-which-extension .gfield_required").show()})})}(jQuery);
+//# sourceMappingURL=script.js.map
