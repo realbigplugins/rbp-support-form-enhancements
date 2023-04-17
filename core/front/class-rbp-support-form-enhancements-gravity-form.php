@@ -66,6 +66,9 @@ class RBP_Support_Form_Enhancements_Gravity_Form {
 							'compare' => '!=',
 						),
 					),
+					'post__not_in' => array(
+						695
+					)
 				) );
 				
 				if ( $downloads->have_posts() ) {
